@@ -1,0 +1,84 @@
+<html>
+
+<!-- Include top.ejs Start -->
+<%- include ../include/top.ejs %>
+<!-- Include top.ejs End -->
+
+<!--
+    Page by icefox | http://mxd.moe | http://weibo.com/sdjnmxd
+    For Miaoowu Mc SkinsStation
+    At 2015-08-27
+    ver 2.2 150828
+    Copy prohibited
+-->
+
+<body>
+<div class="top-content">
+    <div class="inner-bg">
+        <div class="container">
+            <%- include ../global/header.ejs %>
+            <div class="row" id="login-div">
+                <div class="col-sm-6 col-sm-offset-3 form-box">
+                    <div class="form-top">
+                        <div class="form-top-left">
+                            <h3>注册</h3>
+
+                            <p>
+                                有账号了？ <a href="/member/login">来登陆</a>
+                            </p>
+
+                            <p><span id="login-error" class="error-msg"></span></p>
+                        </div>
+                        <div class="form-top-right">
+                            <i class="fa fa-lock"></i>
+                        </div>
+                    </div>
+                    <div class="form-bottom">
+                        <div class="form-group">
+                            <input type="text" placeholder="游戏ID" class="form-username form-control" id="username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="密码" class="form-password form-control" id="password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="重复密码" class="form-password form-control" id="password_rep">
+                        </div>
+                        <button type="submit" id="register_btn" class="btn btn-mid btn-blue"> 注册</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include ../global/footer.ejs %>
+    </div>
+    <input type="file" name='file' id='filechoose' style="display: none;"/>
+</div>
+
+<!-- Include bottom.ejs Start-->
+<%- include ../include/bottom.ejs %>
+<!-- Include bottom.ejs End-->
+
+<script>
+    $(document).ready(function () {
+        $("#register_btn").on('click', function () {
+            if ($("#password").val() != $("#password_rep").val()) {
+                alert("两次输入的密码不相同");
+                return;
+            }
+
+            var username = $("#username").val();
+            var password = $("#password").val();
+
+            $.ajax({
+                url: "/member/register",
+                type: 'post',
+                data: {
+                    username: username,
+                    password: password
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
