@@ -25,8 +25,19 @@ router.post('/', function (req, res, next) {
 
     var text = crypt.CrazyCrypt1(username, password);
 
+    console.log('用户名：' + username);
+    console.log('用户明文密码：' + password);
     console.log('用户加密后密码：' + text);
-    console.log(mysql.hasUser(username, text));
+
+    mysql.hasUser(username, text).then(function (success) {
+        //promise success
+        console.log(success);
+        return success;
+    }, function (error) {
+        //promise error
+        console.log(error);
+        return error;
+    })
 });
 
 module.exports = router;
