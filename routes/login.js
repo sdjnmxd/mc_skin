@@ -6,8 +6,10 @@
  */
 
 var express = require('express');
-var crypto = require('crypto');
 var router = express.Router();
+var crypt = require('../lib/Crypt');
+var mysql = require('../lib/mysql');
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -21,7 +23,10 @@ router.post('/', function (req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
 
-    CrazyCrypt1(username, password)
+    var text = crypt.CrazyCrypt1(username, password);
+
+    console.log('用户加密后密码：' + text);
+    console.log(mysql.hasUser(username, text));
 });
 
 module.exports = router;
