@@ -7,12 +7,15 @@
 
 var express = require('express');
 var router = express.Router();
-var crypt = require('../lib/Crypt');
+var crypt = require('../lib/crypt');
 var mysql = require('../lib/mysql');
 
-
-/* GET home page. */
 router.get('/', function (req, res, next) {
+    if (req.session.username) {
+        //res.redirect('/member/home');
+        return;
+    }
+
     res.render('member/login', {
         title: '皮肤系统 - 抖喵Craft',
         header_description: '请输入游戏ID和密码 | 然后点击“登录”'
@@ -22,21 +25,20 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
-
     var text = crypt.CrazyCrypt1(username, password);
 
-    console.log('用户名：' + username);
-    console.log('用户明文密码：' + password);
-    console.log('用户加密后密码：' + text);
-
     mysql.hasUser(username, text).then(function (success) {
-        //promise success
-        console.log(success);
-        return success;
+        req.session.username = username;
+        res.send('登陆成功');
+        res.status(200).end();
     }, function (error) {
-        //promise error
-        console.log(error);
-        return error;
+        if (error == 2) {
+            res.send("用户名或密码错误");
+            res.status(401).end();
+        } else if (error == 3) {
+            res.send('登录失败，数据库连接错误');
+            res.status(401).end();
+        }
     })
 });
 

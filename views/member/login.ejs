@@ -66,6 +66,12 @@
                 data: {
                     username: username,
                     password: password
+                },
+                error: function (result) {
+                    alert(result)
+                },
+                success: function(result) {
+                    alert(result)
                 }
             });
         });
