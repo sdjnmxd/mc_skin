@@ -16,7 +16,6 @@ var config = require('./config/config');
 
 var app = express();
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -40,15 +39,13 @@ app.use(session({
     }),
     secret: 'what is this ?'
 }));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/member/login', login);
 app.use('/member/home', home);
 app.use('/member/logout', logout);
-
 //app.use('/member/register', register);
-
 
 app.use(function (req, res, next) {
     var err = new Error('40404040404040404040404040404040404004040');
