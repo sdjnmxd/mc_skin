@@ -12,12 +12,12 @@ var mysql = require('../lib/mysql');
 
 router.get('/', function (req, res, next) {
     if (req.session.username) {
-        //res.redirect('/member/home');
+        res.redirect('/member/home');
         return;
     }
 
     res.render('member/login', {
-        title: '皮肤系统 - 抖喵Craft',
+        title: '用户登录 - 抖喵Craft',
         header_description: '请输入游戏ID和密码 | 然后点击“登录”'
     });
 });
@@ -31,6 +31,7 @@ router.post('/', function (req, res, next) {
         req.session.username = username;
         res.send('登陆成功');
         res.status(200).end();
+
     }, function (error) {
         if (error == 2) {
             res.send("用户名或密码错误");

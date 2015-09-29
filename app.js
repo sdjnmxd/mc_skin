@@ -10,6 +10,7 @@ var RedisStore = require('connect-redis')(session);
 var routes = require('./routes/index');
 var login = require('./routes/login');
 var home = require('./routes/home');
+var logout = require('./routes/logout');
 //var register = require('./routes/register');
 var config = require('./config/config');
 
@@ -44,20 +45,17 @@ app.use(express.static('public'));
 app.use('/', routes);
 app.use('/member/login', login);
 app.use('/member/home', home);
+app.use('/member/logout', logout);
+
 //app.use('/member/register', register);
 
 
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('40404040404040404040404040404040404004040');
     err.status = 404;
     next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
         res.status(err.status || 500);
@@ -68,8 +66,6 @@ if (app.get('env') === 'development') {
     });
 }
 
-// production error handler
-// no stacktraces leaked to user
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
@@ -77,6 +73,5 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

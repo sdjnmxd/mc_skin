@@ -15,9 +15,9 @@ module.exports = {
         from: 'CrazyLogin_accounts'
     },
     redis: {
-        host : 'www.miaoowu.com',
-        port : '16379',
-        db : 15,
-        ttl : 60 * 60 * 24
+        host: 'www.miaoowu.com',
+        port: '16379',
+        db: 15,
+        ttl: 60 * 60 * 24
     }
 };
