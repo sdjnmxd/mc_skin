@@ -12,6 +12,8 @@ router.get('/', function (req, res, next) {
     if (req.session.username) {  //如果session存在
         req.session.destroy();  //毁掉这个session
         res.redirect('/member/login');  //跳转到login页面
+    } else {
+        res.redirect('/member/login');
     }
 });
 
