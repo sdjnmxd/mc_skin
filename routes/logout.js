@@ -10,10 +10,11 @@ var router = express.Router();
 
 router.get('/', function (req, res, next) {
     var username = req.session.username;
-    var userip = req.connection.remoteAddress;
+    var userip = req.session.userip;
+    var remoteip = req.headers['x-forwarded-for'];
 
-    if (username) {  //如果session存在
-        console.log(username + "[" + userip + "] " + "清除session成功");
+    if (username && userip) {  //如果session存在
+        console.log(username + "[" + remoteip + "] " + "清除session成功");
 
         req.session.destroy();  //毁掉这个session
         res.redirect('/member/login');  //跳转到login页面
