@@ -27,7 +27,7 @@ router.post('/', function (req, res, next) {
     var password = req.body.password;
     var text = crypt.CrazyCrypt1(username, password);
 
-    mysql.hasUser(username, text).then(function (success) {
+    mysql.checkPassword(username, text).then(function (success) {
         req.session.username = username;
         res.send('登陆成功');
         res.status(200).end();
