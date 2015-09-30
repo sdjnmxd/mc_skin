@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
-    var text = crypt.CrazyCrypt1(username, password);
+    var text = crypt.crazyCrypt1(username, password);
 
     mysql.checkPassword(username, text).then(function (success) {
         req.session.username = username;
