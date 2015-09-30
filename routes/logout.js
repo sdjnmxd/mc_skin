@@ -11,7 +11,7 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
     var username = req.session.username;
     var userip = req.session.userip;
-    var remoteip = req.connection.remoteAddress;
+    var remoteip = req.headers['x-forwarded-for'];
 
     if (username && userip) {  //如果session存在
         console.log(username + "[" + remoteip + "] " + "清除session成功");

@@ -12,7 +12,7 @@ var mysql = require('../lib/mysql');
 
 router.get('/', function (req, res, next) {
     if (req.session.username && req.session.userip) {
-        var remoteip = req.connection.remoteAddress;
+        var remoteip = req.headers['x-forwarded-for'];
         console.log(username + '[' + remoteip + ']' + "已存在session，默认登陆");
 
         res.redirect('/member/home');
@@ -29,7 +29,7 @@ router.post('/', function (req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
     var text = crypt.crazyCrypt1(username, password);
-    var remoteip = req.connection.remoteAddress;
+    var remoteip = req.headers['x-forwarded-for'];
 
     mysql.checkPassword(username, text).then(function (success) {
         console.log(username + "[" + remoteip + "] " + "登陆成功");
