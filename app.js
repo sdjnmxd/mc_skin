@@ -19,7 +19,14 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(logger('dev'));
+
+//控制详细log
+if (config.debug_log) {
+    app.use(logger('combined'));
+} else {
+    console.log("皮肤站已启用")
+}
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -27,7 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 //设置cookie
-app.use(cookieParser('what is this ?'));
+app.use(cookieParser('124e09ur1j3fgioq23ure12iphr'));
 
 //设置session
 app.use(session({
@@ -37,7 +44,7 @@ app.use(session({
         db: config.redis.db,
         ttl: config.redis.ttl
     }),
-    secret: 'what is this ?'
+    secret: 'q320ihrf9jhwpignb2yh49n1i2ed'
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
