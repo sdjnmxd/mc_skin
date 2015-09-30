@@ -11,7 +11,10 @@ var crypt = require('../lib/crypt');
 var mysql = require('../lib/mysql');
 
 router.get('/', function (req, res, next) {
-    if (req.session.username) {
+    if (req.session.username && req.session.userip) {
+        var remoteip = req.connection.remoteAddress;
+        console.log(username + '[' + remoteip + ']' + "已存在session，默认登陆");
+
         res.redirect('/member/home');
         return;
     }
@@ -26,12 +29,14 @@ router.post('/', function (req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
     var text = crypt.crazyCrypt1(username, password);
-    var userip = req.connection.remoteAddress;
+    var remoteip = req.connection.remoteAddress;
 
     mysql.checkPassword(username, text).then(function (success) {
-        console.log(username + "[" + userip + "] " + "登陆成功");
+        console.log(username + "[" + remoteip + "] " + "登陆成功");
 
         req.session.username = username;
+        req.session.ip = remoteip;
+
         res.send('登陆成功');
         res.status(200).end();
     }, function (error) {
