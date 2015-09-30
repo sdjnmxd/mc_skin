@@ -9,7 +9,10 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
-    if (!req.session.username && req.session.userip) {
+    username = req.session.username;
+    userip = req.session.userip;
+
+    if (!username && !userip) {
         res.redirect('/member/login');
         return;
     }
