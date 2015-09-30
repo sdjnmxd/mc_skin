@@ -21,7 +21,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 //控制详细log
-if (config.debug_log) {
+if (config.debug_log.enable) {
     app.use(logger('combined'));
 } else {
     console.log("皮肤站已启用")

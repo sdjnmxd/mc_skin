@@ -9,7 +9,12 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
-    if (req.session.username) {  //如果session存在
+    var username = req.session.username;
+    var userip = req.connection.remoteAddress;
+
+    if (username) {  //如果session存在
+        console.log(username + "[" + userip + "] " + "清除session成功");
+
         req.session.destroy();  //毁掉这个session
         res.redirect('/member/login');  //跳转到login页面
     } else {
