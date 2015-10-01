@@ -11,14 +11,15 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
     var username = req.session.username;
     var userip = req.session.userip;
-    var remoteip = req.headers['x-forwarded-for'];
+    var remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-    if (username && userip) {  //如果session存在
+    if (username && remoteip == userip) {  //如果session存在
         console.log(username + "[" + remoteip + "] " + "清除session成功");
 
         req.session.destroy();  //毁掉这个session
         res.redirect('/member/login');  //跳转到login页面
     } else {
+        console.log('un logout');
         res.redirect('/member/login');
     }
 });
