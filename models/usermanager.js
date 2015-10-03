@@ -4,6 +4,7 @@
  At 2015/9/28
  Copy Prohibited
  */
+var crazylogin = require('../lib/crazylogin');
 var Config = require('../config/config');
 
 var mysql = require("knex")({
@@ -17,13 +18,13 @@ var mysql = require("knex")({
     }
 });
 
-//8b6cf7bcffe42fc90aa5f9554e58ca7f1784b45a2f167fc703d265086df8d37c35a6241722f3f1fe12f41c4e1097ec2320b5496c701c17d54b456e42f6ecd34b
-//SELECT `username` , `password` FROM `miaoowu_mc`.`CrazyLogin_accounts` WHERE `username` = "icefox" AND `password` = "";
-function checkPassword(username, password) {
+exports.checkUserPassword = function checkUserPassword(username, password) {
+    var haxpassword = crazylogin.crazyCrypt1(username,password);
+
     var promise = new Promise(function (resolve, reject) {
         mysql(Config.mysql.from).where({
             username: username,
-            password: password
+            password: haxpassword
         }).select('username').then(function (rows) {
             if (rows.length == 0) {
                 reject(2);
@@ -35,8 +36,6 @@ function checkPassword(username, password) {
         })
     });
     return promise;
-}
-
-exports.checkPassword = checkPassword;
+};
 
 

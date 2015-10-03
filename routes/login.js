@@ -7,8 +7,7 @@
 
 var express = require('express');
 var router = express.Router();
-var crypt = require('../lib/crypt');
-var mysql = require('../lib/mysql');
+var usermanager = require('../models/usermanager');
 
 router.get('/', function (req, res, next) {
     var username = req.session.username;
@@ -31,14 +30,13 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
-    var text = crypt.crazyCrypt1(username, password);
     var remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-    mysql.checkPassword(username, text).then(function (success) {
-        console.log(username + "[" + remoteip + "] " + "登陆成功");
-
+    usermanager.checkUserPassword(username, password).then(function (success) {
         req.session.username = username;
         req.session.userip = remoteip;
+
+        console.log(username + "[" + remoteip + "] " + "登陆成功");
 
         res.send('登陆成功');
         res.status(200).end();
