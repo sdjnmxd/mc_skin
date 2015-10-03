@@ -7,7 +7,7 @@
 
 var express = require('express');
 var router = express.Router();
-var usermanager = require('../models/usermanager');
+var usermanager = require('../models/user');
 
 router.get('/', function (req, res, next) {
     var username = req.session.username;
