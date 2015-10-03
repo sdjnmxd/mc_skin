@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
     var userip = req.session.userip;
     var remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-    if (!username && !userip != remoteip ) {
+    if (!username && remoteip != userip  ) {
         res.redirect('/member/login');
         return;
     }
