@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var RedisStore = require('connect-redis')(session);
+var redisStore = require('connect-redis')(session);
 
 var routes = require('./routes/index');
 var login = require('./routes/login');
@@ -38,7 +38,7 @@ app.use(cookieParser('124e09ur1j3fgioq23ure12iphr'));
 
 //设置session
 app.use(session({
-    store: new RedisStore({
+    store: new redisStore({
         host: config.redis.host,
         port: config.redis.port,
         db: config.redis.db,
