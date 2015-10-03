@@ -7,12 +7,16 @@
 
 var express = require('express');
 var router = express.Router();
-var usermanager = require('../models/user');
+var user = require('../models/user');
+var session = require('../modules/session.js');
+
 
 router.get('/', function (req, res, next) {
     var username = req.session.username;
     var userip = req.session.userip;
     var remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+    if (session.checkUserSession(req))
 
     if (username && remoteip == userip) {
         console.log(username + '[' + remoteip + ']' + "已存在session，默认登陆");
@@ -32,7 +36,7 @@ router.post('/', function (req, res, next) {
     var password = req.body.password;
     var remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-    usermanager.checkUserPassword(username, password).then(function (success) {
+    user.checkUserPassword(username, password).then(function (success) {
         req.session.username = username;
         req.session.userip = remoteip;
 

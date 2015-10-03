@@ -7,13 +7,14 @@
 
 var express = require('express');
 var router = express.Router();
+var session = require('../modules/session');
 
 router.get('/', function (req, res, next) {
     var username = req.session.username;
     var userip = req.session.userip;
     var remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-    if (!username && remoteip != userip  ) {
+    if (!session.checkUserSession(req)) {
         res.redirect('/member/login');
         return;
     }
