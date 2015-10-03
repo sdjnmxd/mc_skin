@@ -8,15 +8,17 @@
 var express = require('express');
 var router = express.Router();
 var session = require('../modules/session');
+var userlog = require('../modules/userlog');
 
 router.get('/', function (req, res, next) {
     var username = req.session.username;
-    var userip = req.session.userip;
-    var remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
     if (!session.checkUserSession(req)) {
+        userlog.consoleLog(req, '[home]不存在session，扔回登陆页');
         res.redirect('/member/login');
         return;
+    } else {
+        userlog.consoleLog(req, '[home]存在session，无需登陆');
     }
 
     res.render('member/home', {

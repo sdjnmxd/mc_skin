@@ -8,18 +8,16 @@
 var express = require('express');
 var router = express.Router();
 var session = require('../modules/session');
+var userlog = require('../modules/userlog');
+
 
 router.get('/', function (req, res, next) {
-    var username = req.session.username;
-    var remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
-    if (session.checkUserSession(req)) {  //如果session存在
-        console.log(username + "[" + remoteip + "] " + "清除session成功");
-
-        req.session.destroy();  //毁掉这个session
-        res.redirect('/member/login');  //跳转到login页面
+    if (session.checkUserSession(req)) {
+        userlog.consoleLog(req, '[logout]清除session成功');
+        req.session.destroy();
+        res.redirect('/member/login');
     } else {
-        console.log('un logout');
+        userlog.consoleLog(req, '[logout]不存在session，扔回登陆页');
         res.redirect('/member/login');
     }
 });

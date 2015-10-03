@@ -24,7 +24,7 @@
                             <h3>登陆</h3>
 
                             <p>
-                                还没有账号？ <a href="/member/register">来一发</a>
+                                还没有账号？ <a>去游戏里注册就好了</a>
                             </p>
 
                             <p><span id="login-error" class="error-msg"></span></p>
@@ -67,12 +67,11 @@
                     username: username,
                     password: password
                 },
-                success: function(result) {
-                    alert(result);
+                success: function (result) {
                     location.href = "/member/home";
                 },
-                error: function (result) {
-                    alert(result);
+                error: function (result) {3
+                    $("#login-error").text(result.responseText);
                 }
             });
         });

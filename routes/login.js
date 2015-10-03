@@ -8,21 +8,17 @@
 var express = require('express');
 var router = express.Router();
 var user = require('../models/user');
-var session = require('../modules/session.js');
+var session = require('../modules/session');
+var userlog = require('../modules/userlog');
 
 
 router.get('/', function (req, res, next) {
-    var username = req.session.username;
-    var userip = req.session.userip;
-    var remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
-    if (session.checkUserSession(req))
-
-    if (username && remoteip == userip) {
-        console.log(username + '[' + remoteip + ']' + "已存在session，默认登陆");
-
+    if (session.checkUserSession(req)) {
+        userlog.consoleLog(req, '[login]存在session，无需登陆');
         res.redirect('/member/home');
         return;
+    } else {
+        userlog.consoleLog(req, '[login]不存在session，需要登陆');
     }
 
     res.render('member/login', {
@@ -40,21 +36,21 @@ router.post('/', function (req, res, next) {
         req.session.username = username;
         req.session.userip = remoteip;
 
-        console.log(username + "[" + remoteip + "] " + "登陆成功");
+        userlog.consoleLog(req, '[login]登陆成功');
 
+        res.status(200);
         res.send('登陆成功');
-        res.status(200).end();
     }, function (error) {
         if (error == 2) {
-            console.log(username + '[' + remoteip + ']' + "登录失败，密码错误");
+            userlog.consoleLog(req, '[login]登录失败，密码错误');
 
+            res.status(401);
             res.send("用户名或密码错误");
-            res.status(401).end();
         } else if (error == 3) {
-            console.log(username + '[' + remoteip + ']' + "登录失败，数据库连接错误");
+            userlog.consoleLog(req, '[login]登录失败，数据库连接错误');
 
+            res.status(500);
             res.send('登录失败，数据库连接错误');
-            res.status(500).end();
         }
     })
 });
