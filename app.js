@@ -11,6 +11,8 @@ var routes = require('./routes/index');
 var login = require('./routes/login');
 var home = require('./routes/home');
 var logout = require('./routes/logout');
+var skins = require('./routes/skins');
+var upload = require('./routes/upload');
 //var register = require('./routes/register');
 var config = require('./config/config');
 
@@ -46,12 +48,15 @@ app.use(session({
     }),
     secret: 'q320ihrf9jhwpignb2yh49n1i2ed'
 }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/member/login', login);
 app.use('/member/home', home);
 app.use('/member/logout', logout);
+app.use('/skins', skins);
+app.use('/skins/upload', upload);
 //app.use('/member/register', register);
 
 app.use(function (req, res, next) {
