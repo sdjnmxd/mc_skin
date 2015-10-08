@@ -16,7 +16,7 @@
     "knex": "^0.8.6",
     "moment": "^2.10.6",
     "morgan": "~1.6.1",
-    "multer": "^1.0.6",
+    "multer": "^0.1.8",
     "mysql": "^2.9.0",
     "redis": "^2.0.1",
     "serve-favicon": "~2.3.0",

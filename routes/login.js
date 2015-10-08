@@ -38,7 +38,6 @@ router.post('/', function (req, res, next) {
 
         userlog.consoleLog(req, '[login]登陆成功');
 
-        res.status(200);
         res.send('登陆成功');
     }, function (error) {
         if (error == 2) {

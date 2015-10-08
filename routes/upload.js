@@ -7,8 +7,6 @@
 
 var express = require('express');
 var router = express.Router();
-var multer = require('multer')
-var upload = multer({dest: './uploads/'});
 
 router.get('/', function (req, res, next) {
     res.status(405);
@@ -16,7 +14,26 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    console.log(req.file);
+    if (req.files != undefined) {
+        var fileSize = Math.round(req.files.file.size / 1024);
+        var fileExtension = req.files.file.extension;
+        var fileName = req.files.file.name;
+
+        console.log(fileSize);
+
+        if (fileSize > 50) {
+            res.status(413);
+            res.send("上传失败，文件过大");
+        } else if (fileExtension != 'png') {
+            res.status(415);
+            res.send("上传失败，文件格式不支持");
+        }
+        var text = '文件大小：' + fileSize + 'kb\n' + '文件类型：' + fileExtension + '\n' + '文件名称：' + file_name;
+        console.log(text);
+    } else {
+        res.status(400);
+        res.send('上传失败，服务器未收到文件');
+    }
 });
 
 

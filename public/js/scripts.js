@@ -29,31 +29,12 @@ $(document).ready(function () {
         var f = $('#filechoose')[0].files[0];
         var m = target_model;
         target_model = "";
-        if (!f.name.endsWith('.png')) {
-            alert("只允许上传png格式的图片文件");
-            $('#filechoose').val(null);
-            return;
-        }
-        if (f.size > 1024 * 1024) {
-            alert("文件太大，最高允许：1MB");
-            $('#filechoose').val(null);
-            return;
-        }
         $.ajaxFileUpload({
             url: "../skins/upload",
             secureurl: false,
             fileElementId: "filechoose",
-            data: {
-                "token": session_token,
-                "type": m
-            },
-            success: function (data, stat) {
-                //alert(data.msg);
-                $('#filechoose').val(null);
-                if (data.errno != 0)
-                    alert("奇怪的错误！ 1");
-                else
-                    setTimeout(refresh, 500);
+            success: function (data, status) {
+
             }
         });
         return false;
@@ -79,9 +60,11 @@ $(document).ready(function () {
         $.ajax({
             url: "./upload",
             type: "DELETE",
+            fieldname: "skins",
             data: {
                 "type": modelName,
-                "token": session_token
+                "token": session_token,
+                "fieldname": 'skins'
             },
             //dataType: "json",
             success: function (data, stat) {

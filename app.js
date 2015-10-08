@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var redisStore = require('connect-redis')(session);
+var multer = require('multer');
 
 var routes = require('./routes/index');
 var login = require('./routes/login');
@@ -50,6 +51,8 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(multer({dest: 'uploads/'}));
 
 app.use('/', routes);
 app.use('/member/login', login);
