@@ -35,7 +35,8 @@ $(document).ready(function () {
             fileElementId: "filechoose",
             success: function (data, status) {
 
-            }
+            },
+            error :
         });
         return false;
     });

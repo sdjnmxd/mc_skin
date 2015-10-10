@@ -14,10 +14,11 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
+    var file = req.files.file;
     if (req.files != undefined) {
-        var fileSize = Math.round(req.files.file.size / 1024);
-        var fileExtension = req.files.file.extension;
-        var fileName = req.files.file.name;
+        var fileSize = Math.round(file.size / 1024);
+        var fileExtension = file.extension;
+        var fileName = file.name;
 
         console.log(fileSize);
 
@@ -28,7 +29,7 @@ router.post('/', function (req, res, next) {
             res.status(415);
             res.send("上传失败，文件格式不支持");
         }
-        var text = '文件大小：' + fileSize + 'kb\n' + '文件类型：' + fileExtension + '\n' + '文件名称：' + file_name;
+        var text = '文件大小：' + fileSize + 'kb\n' + '文件类型：' + fileExtension + '\n' + '文件名称：' + fileName;
         console.log(text);
     } else {
         res.status(400);
