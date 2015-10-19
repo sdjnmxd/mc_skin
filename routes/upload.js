@@ -23,13 +23,13 @@ router.post('/', function (req, res, next) {
         var fileExtension = file.extension;
         var fileName = file.name;
 
-        if (fileSize > 50) {
-            userlog.consoleLog(req, '[upload]上传文件失败,状态码：413 - 文件过大');
-            res.status(413);
+        if (!session.checkUserSession(req)) {
+            userlog.consoleLog(req, '[upload]上传文件失败,状态码：401 - accessToken异常');
+            res.status(401);
             res.json({
-                statusCode: 413,
-                msg: '文件过大,要求小于等于50KB'
-            })
+                statusCode: 401,
+                msg: 'accessToken异常，请登陆'
+            });
         } else if (fileExtension != 'png') {
             userlog.consoleLog(req, '[upload]上传文件失败,状态码：415 - 文件格式不正确');
             res.status(415);
@@ -37,13 +37,13 @@ router.post('/', function (req, res, next) {
                 statusCode: 415,
                 msg: '文件格式不正确,要求为PNG格式'
             });
-        } else if (!session.checkUserSession(req)) {
-            userlog.consoleLog(req, '[upload]上传文件失败,状态码：401 - accessToken异常');
-            res.status(401);
+        } else if (fileSize > 50) {
+            userlog.consoleLog(req, '[upload]上传文件失败,状态码：413 - 文件过大');
+            res.status(413);
             res.json({
-                statusCode: 401,
-                msg: 'accessToken异常，请登陆'
-            });
+                statusCode: 413,
+                msg: '文件过大,要求小于等于50KB'
+            })
         } else {
             var text = '文件大小：' + fileSize + 'kb\n' + '文件类型：' + fileExtension + '\n' + '文件名称：' + fileName;
             //console.log(text);
