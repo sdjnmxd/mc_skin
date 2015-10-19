@@ -178,8 +178,21 @@ img {
     color: #FFFFFF;
 }
 
-.form-top-left .error-msg {
-    color: #F8FD3D;
+.form-top-left .msg {
+    font-weight: bold;
+    text-shadow: 0 0 5px black;
+}
+
+.form-top-left .msg-blue {
+    color: #55ACEE;
+}
+
+.form-top-left .msg-green {
+    color: #4AAF51;
+}
+
+.form-top-left .msg-red {
+    color: #DE615E;
 }
 
 .form-top-right {
@@ -233,6 +246,8 @@ img {
 .form-bottom .input-error {
     border-color: #DE615E;
 }
+
+
 
 .form-control {
     background-color: rgba(0, 0, 0, 0.3);

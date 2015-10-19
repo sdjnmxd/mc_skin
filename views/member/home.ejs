@@ -24,7 +24,7 @@
                             <div class="form-top-left">
                                 <h3>基本信息</h3>
 
-                                <p><span id="login-error" class="error-msg"></span></p>
+                                <p><span id="msgDiv" class="msg"></span></p>
                             </div>
                             <div class="form-top-right">
                                 <i class="fa fa-info-circle"></i>
@@ -39,16 +39,14 @@
                                 <span class="input-group-addon">&nbsp;&nbsp;皮肤&nbsp;&nbsp;</span>
                                 <span id="Stevemodel" class="form-control">未上传</span>
                                 <span class="input-group-btn">
-                                    <button id="uploadSteveModel" class="btn btn-blue" type="button">上传</button>
-                                    <button id="removeSteveModel" class="btn btn-blue" type="button">重置</button>
+                                    <button id="skinsModel" class="btn btn-blue" type="button">上传</button>
                                 </span>
                             </div>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon">&nbsp;&nbsp;披风&nbsp;&nbsp;</span>
                                 <span id="Capemodel" class="form-control">未上传</span>
                                 <span class="input-group-btn">
-                                    <button id="uploadCapeModel" class="btn btn-blue" type="button">上传</button>
-                                    <button id="removeCapeModel" class="btn btn-blue" type="button">重置</button>
+                                    <button id="capeModel" class="btn btn-blue" type="button">上传</button>
                                 </span>
                             </div>
                         </div>
@@ -73,7 +71,7 @@
         </div>
         <%- include ../global/footer.ejs %>
     </div>
-    <input type="file" name='skins' id='filechoose' style="display: none;"/>
+    <input type="file" name='file' id='filechoose' style="display: none;"/>
 </div>
 
 <!-- Include bottom.ejs Start-->

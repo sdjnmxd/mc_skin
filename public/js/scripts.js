@@ -1,114 +1,62 @@
-var session_token = "";
-var target_model = "";
+(function () {
+    $('#skinsModel').click(function () {
+        $.upload({
+            url: '/skins/upload',
+            fileName: 'file',
+            params: {type: 'text'},
+            dataType: 'json',
+            onSend: function (e) {
+                sendNormalMsg('上传中...');
+                return true;
+            },
+            onComplete: function (data) {
+                if (data != '') {
+                    var statusCode = data.statusCode;
+                    var msg = data.msg;
 
-if (typeof String.prototype.endsWith != 'function') {
-    String.prototype.endsWith = function (suffix) {
-        return this.indexOf(suffix, this.length - suffix.length) !== -1;
-    };
-}
+                    switch (statusCode) {
+                        case 200 :
+                            sendSuccessMsg(msg);
+                            break;
+                        case 401 :
+                            sendErrorMsg(msg);
+                            break;
+                        case 413 :
+                            sendErrorMsg(msg);
+                            break;
+                        case 415 :
+                            sendErrorMsg(msg);
+                            break;
+                        case 400 :
+                            sendErrorMsg(msg);
+                            break;
+                        default :
+                            sendErrorMsg('未知错误，服务器返回的是啥？');
+                    }
+                } else {
+                    sendErrorMsg('未知错误，你收到的是啥？');
+                }
+            }
+        });
+    });
 
-function fillModelStatus(n1, l, n2) {
-    if (n1 in l) {
-        var ll = '<a href="#' + l[n1] + '" class="texture-preview">点击查看</a>';
-        $('#remove' + n2 + 'Model').show();
-        $('#upload' + n2 + 'Model').hide();
-        $('#' + n2 + 'model').html("");
-        $('#' + n2 + 'model').append(ll);
-    } else {
-        $('#' + n2 + 'model').html("未上传");
-        $('#remove' + n2 + 'Model').hide();
-        $('#upload' + n2 + 'Model').show();
+    var msgDiv = $('#msgDiv');
+
+    function sendNormalMsg(msg) {
+        msgDiv.removeClass();
+        msgDiv.addClass('msg msg-blue');
+        msgDiv.text(msg);
     }
-}
 
-$(document).ready(function () {
-    $(document).on('change', '#filechoose', function (e) {
-        e.preventDefault();
-        //console.log('changed');
-        if (target_model == "")return;
-        var f = $('#filechoose')[0].files[0];
-        var m = target_model;
-        target_model = "";
-        $.ajaxFileUpload({
-            url: "../skins/upload",
-            secureurl: false,
-            fileElementId: "filechoose",
-            success: function (data, status) {
+    function sendErrorMsg(msg) {
+        msgDiv.removeClass();
+        msgDiv.addClass('msg msg-red');
+        msgDiv.text(msg);
+    }
 
-            },
-            error :
-        });
-        return false;
-    });
-    uploadModel = (function (m) {
-        target_model = m
-        $('#filechoose').val(null);
-        $('#filechoose').click();
-    });
-    $('#uploadAlexModel').click(function () {
-        uploadModel('slim')
-    });
-    $('#uploadSteveModel').click(function () {
-        uploadModel('default')
-    });
-    $('#uploadCapeModel').click(function () {
-        uploadModel('cape')
-    });
-
-    removeModel = (function (modelName) {
-        //console.log("Model Remove "+modelName);
-        var token = $("#token").val()
-        $.ajax({
-            url: "./upload",
-            type: "DELETE",
-            fieldname: "skins",
-            data: {
-                "type": modelName,
-                "token": session_token,
-                "fieldname": 'skins'
-            },
-            //dataType: "json",
-            success: function (data, stat) {
-                //alert(stat);
-                setTimeout(refresh, 500);
-            }
-        });
-    });
-    $('#removeAlexModel').click(function () {
-        removeModel('slim')
-    });
-    $('#removeSteveModel').click(function () {
-        removeModel('default')
-    });
-    $('#removeCapeModel').click(function () {
-        removeModel('cape')
-    });
-
-    $('#switchPreferedModel').click(function () {
-        var x = $('#preferedmodel').html();
-        $.ajax({
-            url: "./update",
-            type: "POST",
-            data: {
-                "preference": x == "Alex" ? "default|slim" : "slim|default",
-                "token": session_token
-            },
-            dataType: "json",
-            success: function (data, stat) {
-                //alert(data.msg);
-                if (data.errno != 0)
-                    alert("奇怪的错误！ 2");
-                else
-                    setTimeout(refresh, 500);
-            }
-        });
-    });
-
-    $(document).on('click', '.texture-preview', function (e) {
-        s = e.currentTarget.getAttribute('href').substr(1);
-        $("#img-div").slideUp('normal', function () {
-            document.getElementById("preview-img").setAttribute("src", "./textures/" + s);
-            $("#img-div").slideDown('normal');
-        });
-    });
-});
+    function sendSuccessMsg(msg) {
+        msgDiv.removeClass();
+        msgDiv.addClass('msg msg-green');
+        msgDiv.text(msg);
+    }
+})();
