@@ -17,6 +17,7 @@
                     switch (statusCode) {
                         case 200 :
                             sendSuccessMsg(msg);
+                            setPreviewImg(data.url);
                             break;
                         case 401 :
                             sendErrorMsg(msg);
@@ -28,6 +29,9 @@
                             sendErrorMsg(msg);
                             break;
                         case 400 :
+                            sendErrorMsg(msg);
+                            break;
+                        case 500 :
                             sendErrorMsg(msg);
                             break;
                         default :
@@ -58,5 +62,9 @@
         msgDiv.removeClass();
         msgDiv.addClass('msg msg-green');
         msgDiv.text(msg);
+    }
+
+    function setPreviewImg(url) {
+        $('#preview-img').attr("src", url);
     }
 })();

@@ -247,8 +247,6 @@ img {
     border-color: #DE615E;
 }
 
-
-
 .form-control {
     background-color: rgba(0, 0, 0, 0.3);
     color: rgba(255,255,255,0.8);
@@ -276,7 +274,10 @@ img {
     margin-top: 25px;
 }
 
-/*ý���ѯ ����Ӧʽ����*/
+.preview-img {
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
 
 @media (min-width: 992px) and (max-width: 1199px) {
 }

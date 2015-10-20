@@ -9,6 +9,7 @@ var express = require('express');
 var router = express.Router();
 var session = require('../modules/session');
 var logger = require('../modules/logger');
+var filer = require('../modules/filer');
 
 router.get('/', function (req, res, next) {
     res.status(405);
@@ -48,12 +49,32 @@ router.post('/', function (req, res, next) {
                 msg: '文件过大,要求大小为50KB'
             })
         } else {
-            logger.consoleLog('upload', '上传文件成功,状态码：200 - AllClear'.info, req);
+            var username = req.session.username;
+            var orgFileDir = __dirname + '/../uploads/tmp/' + fileName;
+            var skinFileDir = __dirname + '/../uploads/' + username + '.png';
 
-            var text = '文件大小：' + fileSize + 'kb\n' + '文件类型：' + fileExtension + '\n' + '文件名称：' + fileName;
-            res.json({
-                statusCode: 200,
-                msg: '上传成功！'
+            filer.processFile(orgFileDir, skinFileDir, function (err) {
+                if (!err) {
+                    logger.consoleLog('upload', '上传文件成功,状态码：200 - AllClear'.info, req);
+
+                    var text = '文件大小：' + fileSize + 'kb\n' + '文件类型：' + fileExtension + '\n' + '文件名称：' + fileName;
+                    console.log(text);
+
+                    res.json({
+                        statusCode: 200,
+                        msg: '上传成功！',
+                        url: '/skins/' + username + ".png"
+                    });
+                } else {
+                    logger.consoleLog('upload', '上传文件失败,状态码：500 - 处理上传文件时出错'.error, req);
+                    console.log(err);
+
+                    res.status(500);
+                    res.json({
+                        statusCode: 500,
+                        msg: '文件处理过程中发生了错误'
+                    });
+                }
             });
         }
     } else {
@@ -67,5 +88,8 @@ router.post('/', function (req, res, next) {
     }
 });
 
+router.delete('/', function (req, res, next) {
+
+});
 
 module.exports = router;
