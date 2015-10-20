@@ -16,6 +16,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
+    if (req.files.file != undefined) {
         var file = req.files.file;
 
         var fileSize = Math.round(file.size / 1024);
