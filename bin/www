@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('mc_skins:server');
 var http = require('http');
 var config = require('../config/config');
+var logger = require('../modules/logger');
 
 /**
  * Get port from environment and store in Express.
@@ -88,5 +89,7 @@ function onListening() {
         ? addr
         : addr.port;
 
-    console.log('服务器监听在 ' + bind + ' 端口');
+    var text = '服务器监听在 '.info + bind.toString().bgMagenta + ' 端口'.info;
+    logger.consoleLog('SYSTEM', text);
+
 }

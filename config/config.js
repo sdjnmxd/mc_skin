@@ -27,7 +27,7 @@ if (debug == true) {
             ttl: 60 * 60 * 24
         },
         debug_log: {
-            enable: true
+            enable: false
         }
     };
 } else {

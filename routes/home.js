@@ -8,17 +8,18 @@
 var express = require('express');
 var router = express.Router();
 var session = require('../modules/session');
-var userlog = require('../modules/userlog');
+var logger = require('../modules/logger');
 
 router.get('/', function (req, res, next) {
     var username = req.session.username;
 
     if (!session.checkUserSession(req)) {
-        userlog.consoleLog(req, '[home]不存在session，扔回登陆页');
+        logger.consoleLog('home', '不存在session - 扔回登陆页'.warn, req);
+
         res.redirect('/member/login');
         return;
     } else {
-        userlog.consoleLog(req, '[home]存在session，无需登陆');
+        logger.consoleLog('home', '存在session - 无需登陆'.info, req);
     }
 
     res.render('member/home', {

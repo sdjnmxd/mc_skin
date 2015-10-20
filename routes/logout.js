@@ -8,16 +8,18 @@
 var express = require('express');
 var router = express.Router();
 var session = require('../modules/session');
-var userlog = require('../modules/userlog');
+var logger = require('../modules/logger');
 
 
 router.get('/', function (req, res, next) {
     if (session.checkUserSession(req)) {
-        userlog.consoleLog(req, '[logout]清除session成功');
+        logger.consoleLog('logout', '清除session - 成功'.info, req);
+
         req.session.destroy();
         res.redirect('/member/login');
     } else {
-        userlog.consoleLog(req, '[logout]不存在session，扔回登陆页');
+        logger.consoleLog('logout', '不存在session - 清除session失败'.warn, req);
+
         res.redirect('/member/login');
     }
 });

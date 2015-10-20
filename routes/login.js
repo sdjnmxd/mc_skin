@@ -9,16 +9,15 @@ var express = require('express');
 var router = express.Router();
 var user = require('../models/user');
 var session = require('../modules/session');
-var userlog = require('../modules/userlog');
+var logger = require('../modules/logger');
 
 
 router.get('/', function (req, res, next) {
     if (session.checkUserSession(req)) {
-        userlog.consoleLog(req, '[login]存在session，无需登陆');
+        logger.consoleLog('login', '存在session - 扔到home页面'.info, req);
+
         res.redirect('/member/home');
         return;
-    } else {
-        userlog.consoleLog(req, '[login]不存在session，需要登陆');
     }
 
     res.render('member/login', {
@@ -36,17 +35,17 @@ router.post('/', function (req, res, next) {
         req.session.username = username;
         req.session.userip = remoteip;
 
-        userlog.consoleLog(req, '[login]登陆成功');
+        logger.consoleLog('login', '密码校验通过，存为新session - 登陆成功'.info, req);
 
         res.send('登陆成功');
     }, function (error) {
         if (error == 2) {
-            userlog.consoleLog(req, '[login]登录失败，密码错误');
+            logger.consoleLog('login', '密码错误 - 登陆失败'.warn, req);
 
             res.status(401);
             res.send("用户名或密码错误");
         } else if (error == 3) {
-            userlog.consoleLog(req, '[login]登录失败，数据库连接错误');
+            logger.consoleLog('login', '数据库连接错误 - 登陆失败'.warn, req);
 
             res.status(500);
             res.send('登录失败，数据库连接错误');
