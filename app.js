@@ -51,7 +51,8 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/skins', express.static(path.join(__dirname, 'uploads')));
+app.use('/skins', express.static(path.join(__dirname, 'uploads/skins')));
+app.use('/capes', express.static(path.join(__dirname, 'uploads/capes')));
 
 //设置上传组建
 app.use(multer({dest: 'uploads/tmp/'})); //上传临时目录
@@ -60,7 +61,7 @@ app.use('/', routes);
 app.use('/member/login', login);
 app.use('/member/home', home);
 app.use('/member/logout', logout);
-app.use('/skins/upload', upload);
+app.use('/upload', upload);
 //app.use('/member/register', register);
 
 app.use(function (req, res, next) {

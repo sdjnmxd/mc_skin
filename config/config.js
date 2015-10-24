@@ -26,6 +26,11 @@ if (debug == true) {
             db: 15,
             ttl: 60 * 60 * 24
         },
+        file: {
+            tmpPath: __dirname + '/../uploads/tmp/',
+            skinsPath: __dirname + '/../uploads/skins/',
+            capePath: __dirname + '/../uploads/capes/'
+        },
         debug_log: {
             enable: true
         }
@@ -49,6 +54,11 @@ if (debug == true) {
             port: '6379',
             db: 15,
             ttl: 60 * 60 * 24
+        },
+        file: {
+            tmpPath: __dirname + '/../uploads/tmp/',
+            skinsPath: __dirname + '/../uploads/skins/',
+            capePath: __dirname + '/../uploads/capes/'
         },
         debug_log: {
             enable: false

@@ -1,11 +1,19 @@
 (function () {
-    $('#skinsModel').click(function () {
+    $('#skinsModelUpload').click(function () {
+        upload('skin');
+    });
+
+    $('#capeModelUpload').click(function () {
+        upload('cape');
+    });
+
+    function upload(type) {
         $.upload({
-            url: '/skins/upload',
-            fileName: 'file',
-            params: {type: 'text'},
+            url: '/upload',
+            fileName: 'miaoowuSkins',
+            params: {uploadType: type},
             dataType: 'json',
-            onSend: function (e) {
+            onSubmit: function (e) {
                 sendNormalMsg('上传中...');
                 return true;
             },
@@ -18,6 +26,11 @@
                         case 200 :
                             sendSuccessMsg(msg);
                             setPreviewImg(data.url);
+                            if (type == 'skin') {
+                                $('#skinsModelUpload').attr('href',data.typeUrl)
+                            } else {
+                                $('#capeModelUpload').attr('href',data.typeUrl)
+                            }
                             break;
                         case 401 :
                             sendErrorMsg(msg);
@@ -42,7 +55,7 @@
                 }
             }
         });
-    });
+    }
 
     var msgDiv = $('#msgDiv');
 
@@ -63,8 +76,8 @@
         msgDiv.addClass('msg msg-green');
         msgDiv.text(msg);
     }
-
-    function setPreviewImg(url) {
-        $('#preview-img').attr("src", url);
-    }
 })();
+
+function setPreviewImg(url) {
+    $('#preview-img').attr("src", url + '?' + Math.random());
+}

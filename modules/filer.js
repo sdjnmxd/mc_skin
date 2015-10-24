@@ -6,9 +6,20 @@
  */
 
 var fs = require('fs');
+var config = require('../config/config');
 
-exports.processFile = function (file, where, callback) {
-    fs.createReadStream(file).pipe(fs.createWriteStream(where)).on('close', function () {
-        fs.unlink(file, callback);
-    }).on('error', callback);
+exports.copyFile = function (file, where, callback) {
+    fs.createReadStream(file).pipe(fs.createWriteStream(where)).on('close', callback);
+};
+
+exports.delFile = function (file, callback) {
+    fs.unlink(file, callback);
+};
+
+exports.isSkinExists = function (username, callback) {
+    fs.exists(config.file.skinsPath + username + '.png', callback);
+};
+
+exports.isCapeExists = function (username, callback) {
+    fs.exists(config.file.capePath + username + '.png', callback);
 };

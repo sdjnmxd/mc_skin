@@ -1,9 +1,3 @@
-/**
- * jQuery upload v1.2
- * http://www.ponxu.com
- *
- * @author xwz
- */
 (function($) {
     var noop = function(){ return true; };
     var frameCount = 0;
