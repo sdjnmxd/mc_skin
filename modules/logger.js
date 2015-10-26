@@ -24,19 +24,20 @@ exports.consoleLog = function (where, text, req) {
     var time = moment().format('YYYY-MM-DD HH:mm:ss');
     var timeText = '[' + time + '] ';
     var from = '[' + where + '] ';
+    var logText;
 
     if (req == undefined) {
-        var log = timeText.toString().data + from.toString().help + text;
+        logText = timeText.toString().data + from.toString().help + text;
 
-        console.log(log);
+        console.log(logText);
     } else {
         var userName = req.session.username || req.body.username;
         var userIp = req.session.userip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         var userNameText = '[' + userName + ']';
         var userIpText = userIp + ' ';
 
-        var log = timeText.toString().data + from.toString().help + userNameText + userIpText + text;
-        console.log(log)
+        logText = timeText.toString().data + from.toString().help + userNameText + userIpText + text;
+        console.log(logText)
     }
 
 
