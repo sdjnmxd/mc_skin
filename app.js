@@ -26,10 +26,7 @@ app.set('view engine', 'ejs');
 //控制详细log
 if (config.debug_log.enable) {
     app.use(logger('combined'));
-} else {
-    console.log("皮肤站已启用")
 }
-
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -65,7 +62,7 @@ app.use('/upload', upload);
 //app.use('/member/register', register);
 
 app.use(function (req, res, next) {
-    var err = new Error('40404040404040404040404040404040404004040');
+    var err = new Error('404');
     err.status = 404;
     next(err);
 });
