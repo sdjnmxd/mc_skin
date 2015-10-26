@@ -33,7 +33,7 @@ router.get('/', function (req, res, next) {
         }
         res.render('member/home', {
             title: '皮肤管理 - 抖喵Craft',
-            header_description: '在这你可以上传你的皮肤或披风，并管理他们',
+            header_description: '在这你可以上传你的皮肤或披风，并管理它们',
             username: userName,
             skinurl: result[0],
             capeurl: result[1]

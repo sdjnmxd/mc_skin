@@ -90,7 +90,7 @@ router.post('/', function (req, res, next) {
                             statusCode: 200,
                             msg: '上传成功！',
                             url: '/' + uploadType + 's/' + userName + ".png",
-                            typeUrl: util.format('<a onclick="setPreviewImg(\'/%ss/%s.png\')">点击预览</a>', uploadType ,userName)
+                            typeUrl: util.format('已上传，<a onclick="setPreviewImg(\'/%ss/%s.png\')">点击预览</a>', uploadType ,userName)
                         });
                     } else {
                         logger.consoleLog('upload', '上传文件失败,状态码：500 - 复制文件时发生错误'.error, req);
