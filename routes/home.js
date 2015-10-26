@@ -10,17 +10,17 @@ var router = express.Router();
 var session = require('../modules/session');
 var logger = require('../modules/logger');
 var async = require('async');
-var fileProcesser = require('../modules/processFileUrl');
+var fileProcessor = require('../modules/processFileUrl');
 
 router.get('/', function (req, res, next) {
     var userName = req.session.username;
 
     async.parallel([
         function (callback) {
-            fileProcesser.processSkin(userName, callback);
+            fileProcessor.processSkin(userName, callback);
         },
         function (callback) {
-            fileProcesser.processCape(userName, callback)
+            fileProcessor.processCape(userName, callback)
         }
     ], function (error, result) {
         if (!session.checkUserSession(req)) {
