@@ -34,25 +34,28 @@
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon">用户名</span>
                                 <span id="playerName" class="form-control"><%- username %></span>
+                                <span class="input-group-btn">
+                                    <button id="logout" class="btn btn-red" type="button">退出登陆</button>
+                                </span>
                             </div>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon">&nbsp;&nbsp;皮肤&nbsp;&nbsp;</span>
                                 <span id="skinsModel" class="form-control"><%- skinurl %></span>
                                 <span class="input-group-btn">
-                                    <button id="skinsModelUpload" class="btn btn-blue" type="button">上传</button>
+                                    <button id="skinsModelUpload" class="btn btn-blue" type="button">上传皮肤</button>
                                 </span>
                             </div>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon">&nbsp;&nbsp;披风&nbsp;&nbsp;</span>
                                 <span id="capeModel" class="form-control"><%- capeurl %></span>
                                 <span class="input-group-btn">
-                                    <button id="capeModelUpload" class="btn btn-blue" type="button">上传</button>
+                                    <button id="capeModelUpload" class="btn btn-blue" type="button">上传披风</button>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row" id="img-div">
+                <div class="row" id="img-div" style="display: none">
                     <div class="col-sm-6 col-sm-offset-3 form-box">
                         <div class="form-top">
                             <div class="form-top-left">

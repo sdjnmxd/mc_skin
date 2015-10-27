@@ -27,7 +27,7 @@
                                 还没有账号？ <a>去游戏里注册就好了</a>
                             </p>
 
-                            <p><span id="login-error" class="error-msg"></span></p>
+                            <p><span id="msgDiv" class="msg"></span></p>
                         </div>
                         <div class="form-top-right">
                             <i class="fa fa-lock"></i>
@@ -55,27 +55,7 @@
 <!-- Include bottom.ejs End-->
 
 <script>
-    $(document).ready(function () {
-        $("#login_btn").on('click', function () {
-            var username = $("#username").val();
-            var password = $("#password").val();
 
-            $.ajax({
-                url: "/member/login",
-                type: 'post',
-                data: {
-                    username: username,
-                    password: password
-                },
-                success: function (result) {
-                    location.href = "/member/home";
-                },
-                error: function (result) {3
-                    $("#login-error").text(result.responseText);
-                }
-            });
-        });
-    });
 </script>
 
 </body>

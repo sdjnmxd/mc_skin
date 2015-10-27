@@ -37,18 +37,27 @@ router.post('/', function (req, res, next) {
 
         logger.consoleLog('login', '密码校验通过，存为新session - 登陆成功'.info, req);
 
-        res.send('登陆成功');
+        res.json({
+            statusCode: 200,
+            msg: '登陆成功，正在跳转...'
+        })
     }, function (error) {
         if (error == 2) {
             logger.consoleLog('login', '密码错误 - 登陆失败'.warn, req);
 
             res.status(401);
-            res.send("用户名或密码错误");
+            res.json({
+                statusCode: 401,
+                msg: '登陆失败，用户名或密码错误'
+            });
         } else if (error == 3) {
             logger.consoleLog('login', '数据库连接错误 - 登陆失败'.warn, req);
 
             res.status(500);
-            res.send('登录失败，数据库连接错误');
+            res.json({
+                statusCode: 500,
+                msg: '登录失败，数据库连接错误！'
+            });
         }
     })
 });

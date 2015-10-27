@@ -1,4 +1,45 @@
 (function () {
+    $("#login_btn").on('click', function () {
+        var username = $("#username").val();
+        var password = $("#password").val();
+
+        if (username == '' || password == '') {
+            sendMessage('error', '用户名或密码不能为空');
+            return
+        }
+
+        $.ajax({
+            url: "/member/login",
+            type: 'post',
+            data: {
+                username: username,
+                password: password
+            },
+            success: function (result) {
+                var msg = result.msg;
+                sendMessage('success', msg);
+                setTimeout(function () {
+                    location.href = "/member/home";
+                }, 2000);
+
+            },
+            error: function (result) {
+                console.log(arguments);
+                var msg = result.responseJSON.msg;
+                sendMessage('error', msg);
+            }
+        });
+    });
+})();
+
+(function () {
+    $('#logout').click(function () {
+        sendMessage('success', '已退出登陆,即将跳转到登录页...');
+        setTimeout(function () {
+            location.href = "/member/logout";
+        }, 2000);
+    });
+
     $('#skinsModelUpload').click(function () {
         upload('skin');
     });
@@ -14,7 +55,7 @@
             params: {uploadType: type},
             dataType: 'json',
             onSubmit: function (e) {
-                sendMessage('info','上传中...');
+                sendMessage('info', '上传中...');
                 return true;
             },
             onComplete: function (data) {
@@ -41,20 +82,10 @@
 
                             break;
                         case 401 :
-                            sendMessage('error', msg);
-                            break;
                         case 413 :
-                            sendMessage('error', msg);
-                            break;
                         case 415 :
-                            sendMessage('error', msg);
-                            break;
                         case 400 :
-                            sendMessage('error', msg);
-                            break;
                         case 500 :
-                            sendMessage('error', msg);
-                            break;
                         default :
                             sendMessage('error', '未知错误，服务器返回的是啥？');
                     }
@@ -64,26 +95,30 @@
             }
         });
     }
-
-    var msgDiv = $('#msgDiv');
-
-    function sendMessage(type, msg) {
-        msgDiv.removeClass();
-        switch (type) {
-            case 'info' :
-                msgDiv.addClass('msg msg-blue');
-                break;
-            case 'success' :
-                msgDiv.addClass('msg msg-green');
-                break;
-            case 'error' :
-                msgDiv.addClass('msg msg-red');
-                break;
-        }
-        msgDiv.text(msg);
-    }
 })();
 
+function sendMessage(type, msg) {
+    var msgDiv = $('#msgDiv');
+
+    msgDiv.removeClass();
+    switch (type) {
+        case 'info' :
+            msgDiv.addClass('msg msg-blue');
+            break;
+        case 'success' :
+            msgDiv.addClass('msg msg-green');
+            break;
+        case 'error' :
+            msgDiv.addClass('msg msg-red');
+            break;
+    }
+    msgDiv.text(msg);
+    setTimeout(function () {
+        msgDiv.text('');
+    }, 2000)
+}
+
 function setPreviewImg(url) {
+    $('#img-div').show();
     $('#preview-img').attr("src", url + '?' + Math.random());
 }
