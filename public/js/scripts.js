@@ -3,8 +3,10 @@
         var username = $("#username").val();
         var password = $("#password").val();
 
+        sendMessage('info', '正在登陆...', 8);
+
         if (username == '' || password == '') {
-            sendMessage('error', '用户名或密码不能为空');
+            sendMessage('error', '用户名或密码不能为空', 3);
             return
         }
 
@@ -54,7 +56,7 @@
             fileName: 'miaoowuSkins',
             params: {uploadType: type},
             dataType: 'json',
-            onSubmit: function (e) {
+            onSubmit: function () {
                 sendMessage('info', '上传中...');
                 return true;
             },
@@ -76,7 +78,7 @@
                                     break;
                             }
 
-                            sendMessage('success', msg);
+                            sendMessage('success', msg, 10);
                             setPreviewImg(data.url);
                             urlDiv.html(data.typeUrl);
 
@@ -86,6 +88,8 @@
                         case 415 :
                         case 400 :
                         case 500 :
+                            sendMessage('error', msg, 10);
+                            break;
                         default :
                             sendMessage('error', '未知错误，服务器返回的是啥？');
                     }
@@ -97,7 +101,13 @@
     }
 })();
 
-function sendMessage(type, msg) {
+function sendMessage(type, msg, time) {
+    if (time == undefined) {
+        time = 3000;
+    } else {
+        time = time * 1000;
+    }
+    console.log(time);
     var msgDiv = $('#msgDiv');
 
     msgDiv.removeClass();
@@ -115,7 +125,7 @@ function sendMessage(type, msg) {
     msgDiv.text(msg);
     setTimeout(function () {
         msgDiv.text('');
-    }, 2000)
+    }, time)
 }
 
 function setPreviewImg(url) {
