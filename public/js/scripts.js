@@ -26,7 +26,6 @@
 
             },
             error: function (result) {
-                console.log(arguments);
                 var msg = result.responseJSON.msg;
                 sendMessage('error', msg);
             }
@@ -107,7 +106,6 @@ function sendMessage(type, msg, time) {
     } else {
         time = time * 1000;
     }
-    console.log(time);
     var msgDiv = $('#msgDiv');
 
     msgDiv.removeClass();
