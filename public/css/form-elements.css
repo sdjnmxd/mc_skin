@@ -8,7 +8,7 @@ textarea.form-control {
     padding: 0 20px;
     vertical-align: middle;
     background: rgba(0,0,0,0.3);
-    /*border: 3px solid #FFFFFF;*/
+    border: 2px solid #888888;
     font-size: 16px;
     font-weight: 300;
     line-height: 50px;
@@ -100,13 +100,11 @@ button.btn:active {
 button.btn:focus {
     outline: 0;
     opacity: 0.6;
-    background: #DE615E;
     color: #FFFFFF;
 }
 
 button.btn:active:focus, button.btn.active:focus {
     outline: 0;
     opacity: 0.6;
-    background: #DE615E;
     color: #FFFFFF;
 }

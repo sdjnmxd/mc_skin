@@ -1,14 +1,57 @@
 (function () {
-    $("#login_btn").on('click', function () {
-        var username = $("#username").val();
-        var password = $("#password").val();
+    var usernameDiv = $("#username");
+    var passwordDiv = $("#password");
 
-        sendMessage('info', '正在登陆...', 8);
+    function setTextInputStatus(who, type) {
+        if (type == 'success') {
+            $(who).addClass('input-success');
+            $(who).removeClass('input-error')
+        } else if (type == 'error') {
+            $(who).removeClass('input-success');
+            $(who).addClass('input-error');
+        }
+    }
+
+    usernameDiv.on('blur', function () {
+        checkTextInput.apply(this, arguments);
+    });
+
+    passwordDiv.on('blur', function () {
+        checkTextInput.apply(this, arguments);
+    });
+
+    function checkTextInput() {
+        if ($(this).val() == '') {
+            setTextInputStatus($(this), 'error');
+        } else {
+            setTextInputStatus($(this), 'success');
+        }
+    }
+
+    $("#login_btn").on('click', function () {
+        var username = usernameDiv.val();
+        var password = passwordDiv.val();
+
+        sendMessage('info', '正在登陆...', 60);
 
         if (username == '' || password == '') {
             sendMessage('error', '用户名或密码不能为空', 3);
+            checkTextInput.apply(usernameDiv, arguments);
+            checkTextInput.apply(passwordDiv, arguments);
             return
         }
+
+        $('.login-form').on('submit', function (e) {
+            $(this).find('input[type="text"], input[type="password"], textarea').each(function () {
+                if ($(this).val() == "") {
+                    e.preventDefault();
+                    $(this).addClass('');
+                }
+                else {
+                    $(this).removeClass('input-error');
+                }
+            });
+        });
 
         $.ajax({
             url: "/member/login",
@@ -27,6 +70,8 @@
             },
             error: function (result) {
                 var msg = result.responseJSON.msg;
+                setTextInputStatus(usernameDiv, 'error');
+                setTextInputStatus(passwordDiv, 'error');
                 sendMessage('error', msg);
             }
         });
@@ -102,7 +147,7 @@
 
 function sendMessage(type, msg, time) {
     if (time == undefined) {
-        time = 3000;
+        time = 5000;
     } else {
         time = time * 1000;
     }
