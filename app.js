@@ -44,6 +44,9 @@ app.use(session({
         db: config.redis.db,
         ttl: config.redis.ttl
     }),
+    name: 'PHPSESSID', //只是一个伪装
+    resave: false,
+    saveUninitialized: false,
     secret: 'q320ihrf9jhwpignb2yh49n1i2ed'
 }));
 
