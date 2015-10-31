@@ -23,11 +23,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-//控制详细log
-if (config.debug_log.enable) {
-    app.use(logger('combined'));
-}
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
@@ -54,7 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/skins', express.static(path.join(__dirname, 'uploads/skins')));
 app.use('/capes', express.static(path.join(__dirname, 'uploads/capes')));
 
-//设置上传组建
+//设置上传组件
 app.use(multer({dest: 'uploads/tmp/'})); //上传临时目录
 
 app.use('/', routes);
