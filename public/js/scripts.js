@@ -25,18 +25,19 @@
         } else {
             setTextInputStatus($(this), 'success');
         }
+    }
 
-        //设置输入框的状态
-        function setTextInputStatus(who, type) {
-            if (type == 'success') {
-                $(who).addClass('input-success');
-                $(who).removeClass('input-error')
-            } else if (type == 'error') {
-                $(who).removeClass('input-success');
-                $(who).addClass('input-error');
-            }
+    //设置输入框的状态
+    function setTextInputStatus(who, type) {
+        if (type == 'success') {
+            $(who).addClass('input-success');
+            $(who).removeClass('input-error')
+        } else if (type == 'error') {
+            $(who).removeClass('input-success');
+            $(who).addClass('input-error');
         }
     }
+
 
     $("#login_btn").on('click', function () {
         var username = usernameDiv.val();
