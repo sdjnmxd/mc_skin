@@ -149,7 +149,7 @@
 })();
 
 //发送提示信息
-function sendMessage(type, msg, time) {
+function sendMessage(type, msg) {
     var msgDiv = $('#msgDiv');
     msgDiv.text('');
 
