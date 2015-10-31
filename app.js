@@ -12,9 +12,8 @@ var routes = require('./routes/index');
 var login = require('./routes/login');
 var home = require('./routes/home');
 var logout = require('./routes/logout');
-var skins = require('./routes/skins');
 var upload = require('./routes/upload');
-//var register = require('./routes/register');
+
 var config = require('./config/config');
 
 var app = express();
@@ -23,15 +22,22 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// init debug_log
+if (config.debug_log.enable) {
+    app.use(logger('combined'));
+}
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+//bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-//设置cookie
+//init cookie
 app.use(cookieParser('124e09ur1j3fgioq23ure12iphr'));
 
-//设置session
+//init session
 app.use(session({
     store: new redisStore({
         host: config.redis.host,
@@ -45,11 +51,12 @@ app.use(session({
     secret: 'q320ihrf9jhwpignb2yh49n1i2ed'
 }));
 
+//init static
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/skins', express.static(path.join(__dirname, 'uploads/skins')));
 app.use('/capes', express.static(path.join(__dirname, 'uploads/capes')));
 
-//设置上传组件
+//init uploader
 app.use(multer({dest: 'uploads/tmp/'})); //上传临时目录
 
 app.use('/', routes);
@@ -57,15 +64,14 @@ app.use('/member/login', login);
 app.use('/member/home', home);
 app.use('/member/logout', logout);
 app.use('/upload', upload);
-//app.use('/member/register', register);
 
-app.use(function (req, res, next) {
-    var err = new Error('404');
-    err.status = 404;
-    next(err);
-});
+if (config.debug_log.enable) {
+    app.use(function (req, res, next) {
+        var err = new Error('404');
+        err.status = 404;
+        next(err);
+    });
 
-if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
@@ -73,14 +79,20 @@ if (app.get('env') === 'development') {
             error: err
         });
     });
-}
-
-app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
+} else {
+    app.use(function (req, res, next) {
+        var err = new Error('PHP Error');
+        err.status = 404;
+        next(err);
     });
-});
+
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: {}
+        });
+    });
+}
 
 module.exports = app;
