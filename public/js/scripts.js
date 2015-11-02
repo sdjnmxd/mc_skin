@@ -175,3 +175,5 @@ function setPreviewImg(url) {
     $('#img-div').show();
     $('#preview-img').attr("src", url + '?' + Math.random());
 }
+
+console.log(' Minecraft皮肤站 \n @2015 Icefox. 版权所有 \n 个人博客：http://mxd.moe | 微博：@今天93有妹子了么');
