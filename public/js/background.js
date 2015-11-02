@@ -1,7 +1,5 @@
 jQuery(document).ready(function () {
-    if(Math.random() * (100 + 1) > 50) {
-        $.backstretch("/images/backgrounds/1.jpg")
-    } else {
-        $.backstretch("/images/backgrounds/2.jpg")
-    }
+    var randomNum = Math.round(Math.random() * (4 + 1));
+    console.log(Math.round(randomNum));
+    $.backstretch("/images/backgrounds/" + randomNum + ".jpg")
 });
