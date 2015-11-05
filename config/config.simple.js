@@ -7,29 +7,29 @@
 
 module.exports = {
     skins: {
-        port: 80
+        port: 80  //监听端口
     },
     mysql: {
-        hostname: '10.10.10.1',
-        port: '3306',
-        username: 'miaoowu_mc',
-        password: 'miaoowu_mc',
-        db: 'miaoowu_mc',
-        from: 'CrazyLogin_accounts'
+        hostname: 'localhost',  //mysql主机地址
+        port: '3306',  //mysql端口号
+        username: 'root',  //mysql登陆用户名
+        password: '',  //mysql密码
+        db: '',  //mysql数据库
+        from: 'CrazyLogin_accounts'  //Minecraft的CrazyLogin库
     },
     redis: {
-        host: '10.10.10.1',
-        port: '6379',
-        db: 15,
-        ttl: 60 * 60 * 24
+        host: 'localhost',   //redis主机地址
+        port: '6379',  //redis
+        db: 15,  //db序号
+        ttl: 60 * 60 * 24  //session过期时间
     },
     file: {
-        tmpPath: __dirname + '/../uploads/tmp/',
-        skinsPath: __dirname + '/../uploads/skins/',
-        capePath: __dirname + '/../uploads/capes/'
+        tmpPath: __dirname + '/../uploads/tmp/',  //上传临时目录
+        skinsPath: __dirname + '/../uploads/skins/',  //皮肤目录
+        capePath: __dirname + '/../uploads/capes/'  //披风目录
     },
     debug_log: {
-        enable: false
+        enable: false  //调试日志是否开启
     }
 };
 
