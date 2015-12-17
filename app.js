@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 //init cookie
-app.use(config.cookie.cookieParser);
+app.use(cookieParser(config.cookie.secret));
 
 //init session
 app.use(session({
