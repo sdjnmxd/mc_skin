@@ -4,7 +4,7 @@
  At 2015/9/28
  Copy Prohibited
  */
-var crazylogin = require('../lib/crazylogin');
+var crazyLogin = require('../lib/crazylogin');
 var Config = require('../config/config');
 
 var mysql = require("knex")({
@@ -19,7 +19,7 @@ var mysql = require("knex")({
 });
 
 exports.checkUserPassword = function checkUserPassword(username, password) {
-    var hashPassword = crazylogin.crazyCrypt1(username,password);
+    var hashPassword = crazyLogin.crazyCrypt1(username,password);
 
     return new Promise(function (resolve, reject) {
         mysql(Config.mysql.from).where({

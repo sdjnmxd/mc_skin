@@ -6,11 +6,11 @@
  */
 
 exports.checkUserSession = function checkUserSession(req) {
-    var username = req.session.username;
-    var userip = req.session.userip;
-    var remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  var username = req.session.username;
+  var userIp = req.session.userip;
+  var remoteIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-    if (username && remoteip == userip) {
-        return true
-    }
+  if (username && remoteIp == userIp) {
+    return true
+  }
 };
