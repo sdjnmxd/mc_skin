@@ -19,12 +19,12 @@ var mysql = require("knex")({
 });
 
 exports.checkUserPassword = function checkUserPassword(username, password) {
-    var haxpassword = crazylogin.crazyCrypt1(username,password);
+    var hashPassword = crazylogin.crazyCrypt1(username,password);
 
-    var promise = new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         mysql(Config.mysql.from).where({
             username: username,
-            password: haxpassword
+            password: hashPassword
         }).select('username').then(function (rows) {
             if (rows.length == 0) {
                 reject(2);
@@ -35,7 +35,6 @@ exports.checkUserPassword = function checkUserPassword(username, password) {
             reject(3);
         })
     });
-    return promise;
 };
 
 
