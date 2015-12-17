@@ -10,7 +10,7 @@ module.exports = {
     port: 80  //监听端口
   },
   cookie: {
-    cookieParser: 'iebri!@FCEUgq2h3912h(1'  //生产服务器必须修改
+    secret: 'iebri!@FCEUgq2h3912h(1'  //生产服务器必须修改
   },
   session: {
     secret: 'q320ihrf9jhwpignb2yh49n1i2ed', //生产服务器必须修改
