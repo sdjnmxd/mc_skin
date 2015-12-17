@@ -20,6 +20,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('trust proxy', 'loopback');   //避免经过nginx反带之后获取不到客户端真实IP的情况
 
 // init debug_log
 if (config.debug_log.enable) {
@@ -31,7 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 //init cookie
-app.use(cookieParser('124e09ur1j3fgioq23ure12iphr'));
+app.use(config.cookie.cookieParser);
 
 //init session
 app.use(session({
@@ -39,12 +40,12 @@ app.use(session({
         host: config.redis.host,
         port: config.redis.port,
         db: config.redis.db,
-        ttl: config.redis.ttl
+        ttl: config.session.ttl
     }),
-    name: 'PHPSESSID', //只是一个伪装
-    resave: false,
-    saveUninitialized: false,
-    secret: 'q320ihrf9jhwpignb2yh49n1i2ed'
+    name: config.session.name,
+    resave: config.session.reSave,
+    saveUninitialized: config.session.saveUninitialized,
+    secret: config.session.secret
 }));
 
 //init static
